@@ -1,52 +1,13 @@
 name: Runbook KB Agent
 
-on:
+'on':
   workflow_dispatch:
-    inputs:
-      jira_issue_key:
-        description: "Jira issue key, for example IS-1234"
-        required: true
-        type: string
-      action:
-        description: "Action to perform"
-        required: true
-        default: "create"
-        type: choice
-        options:
-          - create
-          - update
-      dry_run:
-        description: "Do not create or update Confluence pages"
-        required: true
-        default: true
-        type: boolean
 
+    null
 jobs:
-  runbook-agent:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run Runbook KB Agent
-        env:
-          ATLASSIAN_EMAIL: ${{ secrets.ATLASSIAN_EMAIL }}
-          ATLASSIAN_API_TOKEN: ${{ secrets.ATLASSIAN_API_TOKEN }}
-          ATLASSIAN_SITE_URL: ${{ secrets.ATLASSIAN_SITE_URL }}
-          CONFLUENCE_SPACE_KEY: IS
-          CONFLUENCE_TEMPLATE_PAGE_ID: "491521"
-          CONFLUENCE_PARENT_PAGE_ID: ${{ secrets.CONFLUENCE_PARENT_PAGE_ID }}
-        run: |
-          python src/runbook_agent.py \
-            --issue-key "${{ inputs.jira_issue_key }}" \
-            --action "${{ inputs.action }}" \
-            --dry-run "${{ inputs.dry_run }}"
+      - name: Test
+        run: echo "Runbook KB Agent is working"
